@@ -191,10 +191,7 @@ This project is created for LUXORA AI. All rights reserved.
 
 This is a production landing page. For questions or customization requests, contact the development team.
 
-## 📧 Contact
 
-- **Email**: contact@luxora.ai
-- **Website**: [LUXORA AI](#)
 
 ---
 
