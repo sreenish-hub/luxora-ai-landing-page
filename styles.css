@@ -1,0 +1,669 @@
+/* ========================================
+   LUXORA AI - Premium Landing Page Styles
+   Design: Quiet Luxury, Dark Theme
+   ======================================== */
+
+/* ========================================
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   ======================================== */
+:root {
+    /* Colors - Luxury Dark Palette */
+    --color-bg-primary: #0A0A0F;
+    --color-bg-secondary: #121218;
+    --color-bg-elevated: #1A1A24;
+    --color-text-primary: #E8E6E3;
+    --color-text-secondary: #8B8986;
+    --color-text-muted: #5A5856;
+    --color-accent-electric: #00D4FF;
+    --color-accent-subtle: #1A4D5C;
+    --color-accent-glow: rgba(0, 212, 255, 0.2);
+    
+    /* Typography */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Fluid Typography Scale */
+    --text-hero: clamp(3.5rem, 8vw, 6rem);      /* 56-96px */
+    --text-section: clamp(2.5rem, 5vw, 4rem);   /* 40-64px */
+    --text-heading: clamp(1.75rem, 3vw, 2.5rem); /* 28-40px */
+    --text-body-lg: clamp(1.25rem, 2vw, 1.5rem); /* 20-24px */
+    --text-body: clamp(1rem, 1.5vw, 1.125rem);   /* 16-18px */
+    --text-small: clamp(0.875rem, 1.2vw, 1rem);  /* 14-16px */
+    
+    /* Spacing Scale */
+    --space-xs: 0.5rem;    /* 8px */
+    --space-sm: 1rem;      /* 16px */
+    --space-md: 1.5rem;    /* 24px */
+    --space-lg: 2rem;      /* 32px */
+    --space-xl: 3rem;      /* 48px */
+    --space-2xl: 4rem;     /* 64px */
+    --space-3xl: 6rem;     /* 96px */
+    --space-4xl: 8rem;     /* 128px */
+    --space-5xl: 12rem;    /* 192px */
+    --space-6xl: 16rem;    /* 256px */
+    
+    /* Layout */
+    --container-max: 1440px;
+    --container-padding: clamp(1.5rem, 5vw, 4rem);
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.4s ease;
+    --transition-slow: 0.6s ease;
+    
+    /* Effects */
+    --blur-subtle: blur(8px);
+    --shadow-glow: 0 0 40px var(--color-accent-glow);
+}
+
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* scroll-behavior removed to prevent conflicts with GSAP ScrollTrigger */
+
+body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+p {
+    line-height: 1.7;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover,
+a:focus-visible {
+    color: var(--color-accent-electric);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--color-accent-electric);
+    outline-offset: 4px;
+}
+
+/* ========================================
+   LAYOUT UTILITIES
+   ======================================== */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+.container-full {
+    width: 100%;
+    padding: 0 var(--container-padding);
+}
+
+section {
+    position: relative;
+    padding: var(--space-5xl) 0;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Background image layer */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /* will-change removed - GSAP manages this automatically */
+    filter: brightness(0.7) contrast(0.9);
+}
+
+/* Darkening gradient overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(10, 10, 15, 0.4) 0%,
+        rgba(10, 10, 15, 0.6) 50%,
+        rgba(10, 10, 15, 0.8) 100%
+    );
+    pointer-events: none;
+}
+
+/* Subtle vignette around edges */
+.hero-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 40%,
+        rgba(10, 10, 15, 0.4) 70%,
+        rgba(10, 10, 15, 0.7) 100%
+    );
+    pointer-events: none;
+}
+
+/* Content layer (sits above background) */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: var(--text-hero);
+    font-family: var(--font-display);
+    margin-bottom: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    /* Ensure text is crisp and readable over image */
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-line {
+    display: block;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+.hero-subtitle {
+    font-size: var(--text-body-lg);
+    color: var(--color-text-primary);
+    font-weight: 300;
+    margin-bottom: var(--space-2xl);
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(20px);
+    max-width: 600px;
+    /* Subtle text shadow for readability */
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-cta {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* ========================================
+   CTA BUTTON
+   ======================================== */
+.cta-button {
+    display: inline-block;
+    padding: var(--space-md) var(--space-2xl);
+    background: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-text-secondary);
+    font-size: var(--text-body);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--color-accent-glow), transparent);
+    transition: left var(--transition-slow);
+}
+
+.cta-button:hover,
+.cta-button:focus-visible {
+    border-color: var(--color-accent-electric);
+    color: var(--color-accent-electric);
+    box-shadow: 0 0 30px var(--color-accent-glow);
+    outline: 2px solid var(--color-accent-electric);
+    outline-offset: 4px;
+}
+
+.cta-button:hover::before,
+.cta-button:focus-visible::before {
+    left: 100%;
+}
+
+/* ========================================
+   PHILOSOPHY SECTION
+   ======================================== */
+.philosophy-section {
+    background: var(--color-bg-secondary);
+    padding: var(--space-6xl) 0;
+}
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+}
+
+.philosophy-headline {
+    font-size: var(--text-section);
+    line-height: 1.2;
+    color: var(--color-text-primary);
+}
+
+.philosophy-body {
+    font-size: var(--text-body-lg);
+    color: var(--color-text-secondary);
+    font-weight: 300;
+    line-height: 1.8;
+}
+
+/* ========================================
+   SECTION TITLES
+   ======================================== */
+.section-title {
+    font-size: var(--text-heading);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3xl);
+    text-align: center;
+}
+
+/* ========================================
+   FEATURES SECTION (Horizontal Scroll)
+   ======================================== */
+.features-section {
+    min-height: 100vh;
+    padding: var(--space-5xl) 0;
+    background: var(--color-bg-primary);
+    overflow: hidden;
+}
+
+.features-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+.features-track {
+    display: flex;
+    gap: var(--space-2xl);
+}
+
+.feature-card {
+    flex: 0 0 600px;
+    padding: var(--space-3xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid rgba(232, 230, 227, 0.1);
+    transition: all var(--transition-medium);
+    cursor: pointer;
+}
+
+.feature-card:hover,
+.feature-card:focus-visible {
+    /* transform removed - handled by GSAP to prevent conflicts */
+    border-color: var(--color-accent-electric);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    outline: 2px solid var(--color-accent-electric);
+    outline-offset: -2px;
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--color-accent-electric);
+    margin-bottom: var(--space-lg);
+}
+
+.feature-title {
+    font-size: var(--text-heading);
+    margin-bottom: var(--space-md);
+    color: var(--color-text-primary);
+}
+
+.feature-description {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+}
+
+/* ========================================
+   USE CASES SECTION (Parallax)
+   ======================================== */
+.use-cases-section {
+    background: var(--color-bg-primary);
+    padding: var(--space-6xl) 0;
+}
+
+.use-case-card {
+    position: relative;
+    margin-bottom: var(--space-4xl);
+    padding: var(--space-3xl);
+    min-height: 400px;
+    overflow: hidden;
+    border: 1px solid rgba(232, 230, 227, 0.05);
+    display: flex;
+    align-items: center;
+}
+
+.use-case-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.use-case-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+}
+
+.use-case-title {
+    font-size: var(--text-section);
+    margin-bottom: var(--space-md);
+    color: var(--color-text-primary);
+}
+
+.use-case-tagline {
+    font-size: var(--text-body-lg);
+    color: var(--color-accent-electric);
+    font-weight: 400;
+    margin-bottom: var(--space-lg);
+    font-style: italic;
+}
+
+.use-case-description {
+    font-size: var(--text-body);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+}
+
+/* ========================================
+   TECHNOLOGY SECTION
+   ======================================== */
+.technology-section {
+    background: var(--color-bg-secondary);
+    padding: var(--space-6xl) 0;
+}
+
+.technology-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+}
+
+.technology-headline {
+    font-size: var(--text-section);
+    margin-bottom: var(--space-lg);
+    color: var(--color-text-primary);
+}
+
+.technology-body {
+    font-size: var(--text-body-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--space-2xl);
+}
+
+.technology-stats {
+    display: flex;
+    gap: var(--space-2xl);
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.stat-value {
+    font-size: var(--text-body-lg);
+    font-weight: 600;
+    color: var(--color-accent-electric);
+}
+
+.stat-label {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.data-viz {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2xl);
+}
+
+.viz-svg {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+/* ========================================
+   FINAL CTA SECTION
+   ======================================== */
+.cta-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--color-bg-primary);
+    padding: var(--space-6xl) 0;
+}
+
+.cta-headline {
+    font-size: var(--text-section);
+    margin-bottom: var(--space-lg);
+    color: var(--color-text-primary);
+}
+
+.cta-subtext {
+    font-size: var(--text-body-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2xl);
+    font-weight: 300;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    background: var(--color-bg-secondary);
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid rgba(232, 230, 227, 0.05);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--space-2xl);
+}
+
+.footer-links a {
+    font-size: var(--text-small);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.footer-copyright p {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet (1024px - 1439px) */
+@media (max-width: 1439px) {
+    :root {
+        --space-5xl: 8rem;
+        --space-6xl: 12rem;
+    }
+    
+    .feature-card {
+        flex: 0 0 500px;
+    }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
+    .philosophy-grid,
+    .technology-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+    }
+    
+    .feature-card {
+        flex: 0 0 400px;
+    }
+    
+    .technology-stats {
+        gap: var(--space-lg);
+    }
+}
+
+/* Mobile (375px - 767px) */
+@media (max-width: 767px) {
+    :root {
+        --space-3xl: 3rem;
+        --space-4xl: 4rem;
+        --space-5xl: 5rem;
+        --space-6xl: 6rem;
+    }
+    
+    section {
+        padding: var(--space-4xl) 0;
+    }
+    
+    .hero-section {
+        min-height: 100svh;
+    }
+    
+    .hero-title {
+        margin-bottom: var(--space-md);
+    }
+    
+    .philosophy-section,
+    .technology-section,
+    .cta-section {
+        padding: var(--space-4xl) 0;
+    }
+    
+    /* Convert horizontal scroll to vertical stack on mobile */
+    .features-track {
+        flex-direction: column;
+        gap: var(--space-lg);
+    }
+    
+    .feature-card {
+        flex: 1 1 auto;
+        width: 100%;
+        padding: var(--space-xl);
+    }
+    
+    .use-case-card {
+        padding: var(--space-xl);
+        min-height: 300px;
+    }
+    
+    .technology-stats {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+    
+    .data-viz {
+        padding: var(--space-lg);
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+}
+
+/* ========================================
+   ANIMATION OPTIMIZATION
+   ======================================== */
+/* .will-animate class removed - GSAP manages will-change automatically */
+
+/* Reduce animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
